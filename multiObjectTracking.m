@@ -196,20 +196,17 @@ function multiObjectTracking()
     
     if ~isempty(tracks)
       
-      % Noisy detections tend to result in short-lived tracks, only display tracks that have been visible for more than a minimum number of frames
+      % noisy detections tend to result in short-lived tracks, only display tracks that have been visible for more than a minimum number of frames
       reliableTrackInds = [tracks(:).totalVisibleCount] > minVisibleCount;
       
       reliableTracks = tracks(reliableTrackInds);
       
-      % Display the objects. If an object has not been detected
-      % in this frame, display its predicted bounding box.
+      % display the objects, if an object has not been detected in this frame, display its predicted bounding box
       if ~isempty(reliableTracks)
         
-        % Get bounding boxes.
-        bboxes = cat(1, reliableTracks.bbox);
+        bboxes = cat(1, reliableTracks.bbox);             % get bounding boxes
         
-        % Get ids.
-        ids = int32([reliableTracks(:).id]);
+        ids = int32([reliableTracks(:).id]);              % get ids
         
         % Create labels for objects indicating the ones for
         % which we display the predicted rather than the actual
