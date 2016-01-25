@@ -165,6 +165,7 @@ function multiObjectTracking()
   
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   function createNewTracks()
+    
     centroids = centroids(unassignedDetections, :);
     bboxes = bboxes(unassignedDetections, :);
     
@@ -208,26 +209,24 @@ function multiObjectTracking()
         
         ids = int32([reliableTracks(:).id]);              % get ids
         
-        % Create labels for objects indicating the ones for
-        % which we display the predicted rather than the actual
-        % location.
+        % create labels for objects indicating the ones for which we display the predicted rather than the actual location
         labels = cellstr(int2str(ids'));
         predictedTrackInds = [reliableTracks(:).consecutiveInvisibleCount] > 0;
         isPredicted = cell(size(labels));
         isPredicted(predictedTrackInds) = {' predicted'};
         labels = strcat(labels, isPredicted);
         
-        % Draw the objects on the frame.
+        % draw the objects on the frame.
         frame = insertObjectAnnotation(frame, 'rectangle', bboxes, labels);
         
-        % Draw the objects on the mask.
+        % draw the objects on the mask.
         mask = insertObjectAnnotation(mask, 'rectangle', bboxes, labels);
         
       end     % end inner if
       
     end     % end outer if
     
-    % Display the mask and the frame.
+    % display the mask and the frame
     obj.maskPlayer.step(mask);
     obj.videoPlayer.step(frame);
   
